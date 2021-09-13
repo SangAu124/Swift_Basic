@@ -66,3 +66,38 @@ let reversed7: [String] = names.sorted(by: >)
 
 //******** 값 획득 ********
 
+func makeIncrementer(forIncrement amount: Int) -> (() -> Int) {
+    var runningTotal = 0
+    func incrementer() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementer
+}
+
+// makeIncrementer 함수의 반환 타입은 () -> Int입니다. => 함수 객체를 반환
+
+var a = makeIncrementer(forIncrement: 1)
+a()
+a()
+
+let incrementByTwo: (() -> Int) = makeIncrementer(forIncrement: 2)
+
+let first: Int = incrementByTwo() // 2
+let second: Int = incrementByTwo() // 4
+let third: Int = incrementByTwo() // 6
+
+//******** 클로저는 참조 타입 ********
+
+// 위 예제를 보았듯이 클로저는 상수인 incrementByTwo는 상수이지만 클로저는 값 획득을 통해 runningTotal 변수를 계속해서 증가시킬 수 있습니다. because 클로저는 참조 타입이기 때문입니다.
+
+//  두 상수는 같은 클로저를 참조하기 때문에 동일한 클로저가 동작한다.
+let incrementByOne: (() -> Int) = makeIncrementer(forIncrement: 2)
+let sameWithIncrementByOne: (() -> Int) = incrementByOne
+
+let first1: Int = incrementByOne()              // 2
+let second2: Int = sameWithIncrementByOne()     // 4
+
+//******** 탈출 클로저 ********
+
+
