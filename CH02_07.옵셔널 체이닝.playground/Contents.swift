@@ -18,7 +18,7 @@ class Person{
 class Apartment {
     var buildingNumber: String
     var roomNumber: String
-    var `guard`: Person
+    var guard1: Person
     var owner: Person?
     
     init(dong: String, ho: String){
@@ -43,8 +43,8 @@ let superman: Person? = Person(name: "superman")
 func guardJob(owner: Person?) {
     if let owner = owner {
         if let home = owner.home {
-            if let `guard` = home.guard {
-                if let guardJob = `guard`.job {
+            if let guard1 = home.guard1 {
+                if let guardJob = guard1.job {
                     print("우리집 경비원의 직업은 \(guardJob)입니다")
                 } else {
                     print("우리집 경비원은 직업이 없어요")
@@ -58,7 +58,7 @@ guardJob(owner: SangAu)
 
 // 옵셔널 체이닝을 사용한다면
 func guardJobWithOptionalChaining(owner: Person?) {
-    if let guardJob = owner?.home?.guard?.job {
+    if let guardJob = owner?.home?.guard1?.job {
         print("우리집 경비원의 직업은 \(guardJob)입니다")
     } else {
         print("우리집 경비원은 직업이 없어요")
@@ -68,18 +68,35 @@ func guardJobWithOptionalChaining(owner: Person?) {
 guardJobWithOptionalChaining(owner: SangAu)
 
 
-SangAu?.home?.guard?.job // nil
+SangAu?.home?.guard1?.job // nil
 
 SangAu?.home = apart
 
 SangAu?.home // Optional(Apartment)
-SangAu?.home?.guard // nil
+SangAu?.home?.guard1 // nil
 
-SangAu?.home?.guard = superman
+SangAu?.home?.guard1 = superman
 
-SangAu?.home?.guard // Optional(Person)
+SangAu?.home?.guard1 // Optional(Person)
 
-SangAu?.home?.guard?.name // superman
-SangAu?.home?.guard?.job // nil
+SangAu?.home?.guard1?.name // superman
+SangAu?.home?.guard1?.job // nil
 
-SangAu?.home?.guard?.job = "경비원"
+SangAu?.home?.guard1?.job = "경비원"
+
+//nil 병합 연산자
+//중위 연산자 입니다.
+
+Optional ?? Value
+ // 옵셔널 값이 nil일 경우, 우측의 값을 반환합니다. 띄어쓰기에 주의하여야 합니다.
+
+var guardJob: String
+
+guardJob = SangAu?.home?.guard1.job ?? "슈퍼맨"
+print(guardJob) // 경비원
+
+SangAu?.home?.guard1?.job = nil
+
+guardJob = SangAu?.home?.guard.job ?? "슈퍼맨"
+print(guardJob) // 슈퍼맨
+
